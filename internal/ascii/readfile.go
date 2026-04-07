@@ -2,17 +2,15 @@ package ascii
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 
 	m "acad.learn2earn.ng/git/dositadi/ascii-art-fs/pkg/model"
 )
 
-func (a *Ascii) ReadFont(char rune, font string) ([]string, *m.Error) {
-	fmt.Println("Entered")
+func (a *Ascii) ReadFont(char rune) ([]string, *m.Error) {
 	path := ""
 
-	switch font {
+	switch a.Banner {
 	case "shadow":
 		path = "fonts/shadow.txt"
 	case "standard":
@@ -36,7 +34,7 @@ func (a *Ascii) ReadFont(char rune, font string) ([]string, *m.Error) {
 
 	scanner := bufio.NewScanner(file)
 
-	startLine := (char - ' ') * 9
+	startLine := ((char - ' ') * 9) + 1
 	endLine := startLine + 8
 	currentLine := 0
 

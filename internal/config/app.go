@@ -12,7 +12,8 @@ type App struct{}
 
 type Sketch interface {
 	Splitter() []string
-	ReadFont(char rune, font string) ([]string, *m.Error)
+	ReadFont(char rune) ([]string, *m.Error)
+	Transform(input []string) [][][]string
 }
 
 func (a *App) GetInput() (input, banner string) {
@@ -46,7 +47,7 @@ func (a *App) Draw() {
 
 	trimmed := sketch.Splitter()
 	fmt.Println(trimmed, len(trimmed))
-	_, err := sketch.ReadFont('a', "standard")
+	_, err := sketch.ReadFont('a')
 	if err != nil {
 		panic(err)
 	}
