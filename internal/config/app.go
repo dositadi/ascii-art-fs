@@ -3,9 +3,17 @@ package config
 import (
 	"fmt"
 	"os"
+
+	s "acad.learn2earn.ng/git/dositadi/ascii-art-fs/internal/ascii"
+	m "acad.learn2earn.ng/git/dositadi/ascii-art-fs/pkg/model"
 )
 
 type App struct{}
+
+type Sketch interface {
+	Splitter() []string
+	ReadFont(char rune, font string) ([]string, *m.Error)
+}
 
 func (a *App) GetInput() (input, banner string) {
 	if len(os.Args) == 1 {
@@ -32,7 +40,18 @@ func (a *App) GetInput() (input, banner string) {
 	return input, banner
 }
 
-func (a *App) Run() {
+func (a *App) Draw() {
 	input, banner := a.GetInput()
-	fmt.Println("input: ", input, " banner: ", banner)
+	sketch := s.Ascii{Input: input, Banner: banner}
+
+	trimmed := sketch.Splitter()
+	fmt.Println(trimmed, len(trimmed))
+	_, err := sketch.ReadFont('a', "standard")
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (a *App) Run() {
+	a.Draw()
 }
