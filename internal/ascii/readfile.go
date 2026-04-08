@@ -8,6 +8,13 @@ import (
 )
 
 func (a *Ascii) ReadFont(char rune) ([]string, *m.Error) {
+	if char < ' ' || char > '~' {
+		return nil, &m.Error{
+			Error:  "Invalid character.",
+			Detail: "Found an invalid character.\nUnable to transform invalid character",
+		}
+	}
+	
 	path := ""
 
 	switch a.Banner {
