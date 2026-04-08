@@ -3,6 +3,7 @@ package ascii
 import (
 	"bufio"
 	"os"
+	"strings"
 
 	m "acad.learn2earn.ng/git/dositadi/ascii-art-fs/pkg/model"
 )
@@ -14,10 +15,10 @@ func (a *Ascii) ReadFont(char rune) ([]string, *m.Error) {
 			Detail: "Found an invalid character.\nUnable to transform invalid character",
 		}
 	}
-	
+
 	path := ""
 
-	switch a.Banner {
+	switch strings.ToLower(a.Banner) {
 	case "shadow":
 		path = "fonts/shadow.txt"
 	case "standard":
@@ -27,7 +28,7 @@ func (a *Ascii) ReadFont(char rune) ([]string, *m.Error) {
 	default:
 		return nil, &m.Error{
 			Error:  "Invalid font.",
-			Detail: "The font you gave is not supported by our system.",
+			Detail: "The font you gave is not supported by our system.\nSupported fonts => Standard, Shadow & Tinkertoy",
 		}
 	}
 
@@ -38,6 +39,8 @@ func (a *Ascii) ReadFont(char rune) ([]string, *m.Error) {
 			Detail: err.Error(),
 		}
 	}
+
+	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 

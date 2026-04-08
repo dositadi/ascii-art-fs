@@ -10,15 +10,20 @@ import (
 
 type App struct{}
 
+const (
+	Usage = "Usage: go run . [STRING] [BANNER]\nEX: go run . something standard"
+)
+
 type Sketch interface {
 	Splitter() []string
 	ReadFont(char rune) ([]string, *m.Error)
 	Transform(input []string) [][][]string
+	PrintAscii(input [][][]string)
 }
 
 func (a *App) GetInput() (input, banner string) {
 	if len(os.Args) == 1 {
-		fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard")
+		PrintError(&m.Error{Error: "Invalid command", Detail: "You did not enter the text and your choice banner"})
 		return
 	}
 
@@ -26,7 +31,7 @@ func (a *App) GetInput() (input, banner string) {
 
 	switch len(args) {
 	case 0:
-		fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard")
+		PrintError(&m.Error{Error: "Invalid command", Detail: "You did not enter the text and your choice banner"})
 		return
 	case 1:
 		input = args[0]
@@ -35,7 +40,7 @@ func (a *App) GetInput() (input, banner string) {
 		input = args[0]
 		banner = args[1]
 	default:
-		fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard")
+		PrintError(&m.Error{Error: "Superflous input", Detail: "Only two inputs are required (the <text> and <banner>)"})
 		return
 	}
 	return input, banner
@@ -43,16 +48,30 @@ func (a *App) GetInput() (input, banner string) {
 
 func (a *App) Draw() {
 	input, banner := a.GetInput()
+
+	if input == "" || banner == "" {
+		return
+	}
+
 	sketch := s.Ascii{Input: input, Banner: banner}
 
 	trimmed := sketch.Splitter()
-	fmt.Println(trimmed, len(trimmed))
-	_, err := sketch.ReadFont('a')
-	if err != nil {
-		panic(err)
+
+	formattedAscii, err2 := sketch.Transform(trimmed)
+	if err2 != nil {
+		PrintError(err2)
+		return
 	}
+
+	sketch.PrintAscii(formattedAscii)
 }
 
 func (a *App) Run() {
 	a.Draw()
+}
+
+func PrintError(err *m.Error) {
+	message := fmt.Sprintf("Error: %s\nDetail: %s", err.Error, err.Detail)
+
+	fmt.Println(Usage, "\n\n", message)
 }

@@ -1,6 +1,8 @@
 package ascii
 
 import (
+	"strings"
+
 	m "acad.learn2earn.ng/git/dositadi/ascii-art-fs/pkg/model"
 )
 
@@ -11,8 +13,8 @@ func (a *Ascii) Transform(input []string) ([][][]string, *m.Error) {
 		currentWord := word
 		var wordAscii [][]string
 
-		if currentWord == "" {
-			wordAscii = append(wordAscii, []string{"\n"})
+		if strings.Compare(currentWord, "") == 0 {
+			wordAscii = append(wordAscii, []string{""})
 			output = append(output, wordAscii)
 			continue
 		}
@@ -22,10 +24,9 @@ func (a *Ascii) Transform(input []string) ([][][]string, *m.Error) {
 			if err != nil {
 				return nil, err
 			}
-
 			wordAscii = append(wordAscii, charAscii)
-			output = append(output, wordAscii)
 		}
+		output = append(output, wordAscii)
 	}
 	return output, nil
 }
