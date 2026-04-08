@@ -23,7 +23,7 @@ func TestReadFile(t *testing.T) {
 	}
 
 	for _, c := range tc {
-		out, err := a.ReadFont('S')
+		out, err := a.ReadFont(c.In)
 		if err != nil {
 			t.Fatalf("Error: %s; Detail: %s", err.Error, err.Detail)
 		}
