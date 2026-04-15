@@ -46,10 +46,12 @@ func (a *App) getInput() (input, banner string) {
 	return input, banner
 }
 
+// This function is responsible for drawing the ascii
 func (a *App) draw() {
 	input, banner := a.getInput()
 
 	if input == "" || banner == "" {
+		PrintError(&m.Error{Error: "Empty strings", Detail: "You can't provide an empty string for text or font."})
 		return
 	}
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"time"
 )
 
 func (a *Ascii) PrintAscii(input [][][]string) {
@@ -25,6 +26,7 @@ func (a *Ascii) PrintAscii(input [][][]string) {
 				}
 			}
 			fmt.Println(combinedString.String())
+			time.Sleep(1 * time.Second)
 		}
 	}
 }
