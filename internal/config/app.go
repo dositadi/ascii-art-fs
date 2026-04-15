@@ -21,7 +21,7 @@ type Sketch interface {
 	PrintAscii(input [][][]string)
 }
 
-func (a *App) GetInput() (input, banner string) {
+func (a *App) getInput() (input, banner string) {
 	if len(os.Args) == 1 {
 		PrintError(&m.Error{Error: "Invalid command", Detail: "You did not enter the text and your choice banner"})
 		return
@@ -46,8 +46,8 @@ func (a *App) GetInput() (input, banner string) {
 	return input, banner
 }
 
-func (a *App) Draw() {
-	input, banner := a.GetInput()
+func (a *App) draw() {
+	input, banner := a.getInput()
 
 	if input == "" || banner == "" {
 		return
@@ -67,7 +67,7 @@ func (a *App) Draw() {
 }
 
 func (a *App) Run() {
-	a.Draw()
+	a.draw()
 }
 
 func PrintError(err *m.Error) {
