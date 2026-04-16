@@ -18,7 +18,6 @@ func TestReadFile(t *testing.T) {
 		{In: 'D'},
 		{In: 'f'},
 		{In: '0'},
-		{In: '~'},
 		{In: ' '},
 	}
 

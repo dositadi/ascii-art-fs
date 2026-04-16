@@ -20,11 +20,11 @@ func (a *Ascii) ReadFont(char rune) ([]string, *m.Error) {
 
 	switch strings.ToLower(a.Banner) {
 	case "shadow":
-		path = "fonts/shadow.txt"
+		path = "/home/gamp/Learn2Earn/ascii-art-fs/fonts/shadow.txt"
 	case "standard":
-		path = "fonts/standard.txt"
+		path = "/home/gamp/Learn2Earn/ascii-art-fs/fonts/standard.txt"
 	case "tinkertoy":
-		path = "fonts/tinkertoy.txt"
+		path = "/home/gamp/Learn2Earn/ascii-art-fs/fonts/tinkertoy.txt"
 	default:
 		return nil, &m.Error{
 			Error:  "Invalid font.",
